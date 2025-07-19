@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Mesa de Partes Virtual - DEVIDA</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background-color: #f8f9fa;
+		}
+
+		.imgHeader {
+			width: 400px;
+			height: auto;
+			margin-top: 20px;
+		}
+
+		label {
+			font-size: 14px;
+		}
+
+		.card {
+			margin-bottom: 25px;
+		}
+
+		textarea.form-control {
+			resize: none;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container mt-4 mb-4">
+		<div class="card">
+			<div class="row">
+				<div class="col-md-12" align="center">
+					<img src="logotipo-DEVIDA.png" alt="Logo DEVIDA" class="imgHeader">
+				</div>
+			</div>
+			<h3 class="card-header text-center"><strong>MESA DE PARTES VIRTUAL</strong></h3>
+
+			<div class="row mt-5">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<label class="text-justify mt-1">La Comisión Nacional para el Desarrollo y Vida sin Drogas – DEVIDA
+						hace de conocimiento que durante
+						el periodo de Emergencia Nacional declarado por Decreto Supremo N° 044-2020-PCM y sus prórrogas,
+						precisiones y modificaciones;
+						se ha puesto a disposición el siguiente formulario que les permitirá el envío de
+						documentos.</label>
+					<label class="text-justify mt-2"><strong>IMPORTANTE: El horario de recepción de documentos es de
+							Lunes a Viernes de <span>09:00 AM</span> hasta las <span>05:00 PM</span>.</strong>
+						<br>Fuera del horario indicado, el documento tendrá como fecha de registro el siguiente día
+						hábil.</label>
+				</div>
+			</div>
+
+			<div class="card-body">
+				<form id="signup-form" action="https://localhost:7022/api/MesaPartes" method="POST"
+					enctype="multipart/form-data" autocomplete="off">
+
+
+
+
+					<!-- 			<div class="card"> -->
+					<!-- 			  <div class="card-header">I. FUNCIONARIO RESPONSABLE DE ENTREGAR LA INFORMACI&Oacute;N</div> -->
+					<!-- 			  <div class="card-body">	 -->
+					<!-- 			  		<label class="text-center mt-1" id="nombresFunc" th:text="${valorParametro8.desNombre}"></label>				   -->
+					<!-- 			  </div> -->
+					<!-- 			</div> -->
+
+					<div class="card mt-4">
+						<div class="card-header">I. DATOS DEL SOLICITANTE</div>
+						<div class="card-body">
+
+							<input type="hidden" id="codUsuarioCrea" name="codUsuarioCrea"
+								value="162B113D93631289595C7760798ADB08">
+
+							<div class="row">
+								<div class="col-md-2">
+									<label for="nombre">Tipo de Solicitante:</label>
+								</div>
+								<div class="col-md-2">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="codTipoSolicitante" value="1"
+											required="required" id="codTipoSolicitante1">
+										<label for="1">Persona Natural</label>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="codTipoSolicitante" value="2"
+											required="required" id="codTipoSolicitante2">
+										<label for="2">Persona Jurídica</label>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<!--                    		<button type="button" name="DNIbutt" id="DNIbutt" >DNI</button>				  					   -->
+								</div>
+								<div class="col-md-2">
+									<!-- 				  		<button type="button" name="CEXbutt" id="CEXbutt" >CEX</button> -->
+								</div>
+								<div class="col-md-2">
+									<!-- 				  		<button type="button" name="RUCbutt" id="RUCbutt" >RUC</button>				   -->
+								</div>
+							</div>
+
+							<div class="row mt-4">
+								<div class="col-md-2">
+									<label for="tipo_documento">Tipo de Documento de Identificación:</label>
+
+									<input type="hidden" id="hideCodTipoDocumento" value="" name="hideCodTipoDocumento">
+								</div>
+								<div class="col-md-3">
+
+									<select class="form-control" name="CodTipoDocumento" id="CodTipoDocumento"
+										required="required">
+										<option selected="selected" value="" disabled="disabled">--Seleccione--</option>
+										<option value="17">DNI</option>
+										<option value="18">CE</option>
+										<option value="19">RUC</option>
+										<option value="20">Otro</option>
+									</select>
+
+								</div>
+								<div class="col-md-1"></div>
+								<div class="col-md-2">
+									<label for="nro_documento">Nro. de Documento de Identificación:</label>
+								</div>
+								<div class="col-md-2">
+									<input type="text" class="form-control" id="NroDocumento" name="NroDocumento"
+										placeholder="" required="required" value="">
+								</div>
+								<div class="col-md-2" id="div_buscar" style="display:none">
+									<button type="button" name="buscar" id="buscar">BUSCAR</button>
+								</div>
+
+							</div>
+							<div class="row mt-4">
+								<div class="col-md-12">
+									<div id="loading" align="center">
+									</div>
+								</div>
+							</div>
+
+							<div id="replace_razon" style="display:none">
+								<div class="row mt-2">
+									<div class="col-md-2">
+										<label for="nombre">Nombre o Razón Social:</label>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" id="RazonSocial" name="RazonSocial"
+											placeholder="" maxlength="256" value="">
+									</div>
+								</div>
+								<div class="row mt-4">
+									<div class="col-md-2">
+										<label for="nombre"></label>
+									</div>
+								</div>
+							</div>
+
+							<div id="replace_nombres_apellidos">
+								<div class="row mt-2">
+									<div class="col-md-2">
+										<label for="nombre">Nombres:</label>
+									</div>
+
+									<div class="col-md-3">
+										<input type="text" class="form-control" id="Nombres" name="Nombres"
+											pattern="([A-z0-9À-ž\s]){2,}" placeholder="" required="required"
+											maxlength="128" value="">
+									</div>
+								</div>
+								<div class="row mt-4">
+									<div class="col-md-2">
+										<label for="nombre">Apellido Paterno:</label>
+									</div>
+									<div class="col-md-3">
+										<input type="text" class="form-control" id="ApePaterno" name="ApePaterno"
+											pattern="([A-z0-9À-ž\s]){2,}" placeholder="" required="required"
+											maxlength="128" value="">
+									</div>
+									<div class="col-md-1"></div>
+									<div class="col-md-2">
+										<label for="nombre">Apellido Materno:</label>
+									</div>
+									<div class="col-md-3">
+										<input type="text" class="form-control" id="ApeMaterno" name="ApeMaterno"
+											placeholder="" pattern="([A-z0-9À-ž\s]){2,}" required="required"
+											maxlength="128" value="">
+									</div>
+								</div>
+							</div>
+
+							<div class="row mt-4">
+								<div class="col-md-2">
+									<label for="nombre">Dirección:</label>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group">
+										<label for="nombre">Av./Calle./Jr./Psj:</label>
+										<input type="text" class="form-control" id="CalleDomicilio"
+											name="CalleDomicilio" placeholder="" required="required" maxlength="100"
+											value="">
+
+									</div>
+								</div>
+
+							</div>
+							<div class="row mt-2">
+								<div class="col-md-2"></div>
+
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="Departamento">Departamento:</label>
+										<select class="form-control" name="Departamento" id="Departamento" required>
+											<option selected disabled value="">--Seleccione--</option>
+											<option value="AMAZONAS">AMAZONAS</option>
+											<option value="ANCASH">ANCASH</option>
+											<option value="APURIMAC">APURIMAC</option>
+											<option value="AREQUIPA">AREQUIPA</option>
+											<option value="AYACUCHO">AYACUCHO</option>
+											<option value="CAJAMARCA">CAJAMARCA</option>
+											<option value="CUSCO">CUSCO</option>
+											<option value="HUANCAVELICA">HUANCAVELICA</option>
+											<option value="HUANUCO">HUANUCO</option>
+											<option value="ICA">ICA</option>
+											<option value="JUNIN">JUNIN</option>
+											<option value="LA LIBERTAD">LA LIBERTAD</option>
+											<option value="LAMBAYEQUE">LAMBAYEQUE</option>
+											<option value="LIMA">LIMA</option>
+											<option value="LORETO">LORETO</option>
+											<option value="MADRE DE DIOS">MADRE DE DIOS</option>
+											<option value="MOQUEGUA">MOQUEGUA</option>
+											<option value="PASCO">PASCO</option>
+											<option value="PIURA">PIURA</option>
+											<option value="CALLAO">PROVINCIA CONSTITUCIONAL DEL CALLAO</option>
+											<option value="PUNO">PUNO</option>
+											<option value="SAN MARTIN">SAN MARTIN</option>
+											<option value="TACNA">TACNA</option>
+											<option value="TUMBES">TUMBES</option>
+											<option value="UCAYALI">UCAYALI</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-1"></div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="Provincia">Provincia:</label>
+										<select class="form-control" name="Provincia" id="Provincia" required>
+											<option selected disabled value="">--Seleccione--</option>
+											<option value="AMBO">AMBO</option>
+											<option value="DOS DE MAYO">DOS DE MAYO</option>
+											<option value="HUACAYBAMBA">HUACAYBAMBA</option>
+											<option value="HUAMALIES">HUAMALIES</option>
+											<option value="HUANUCO">HUANUCO</option>
+											<option value="LAURICOCHA">LAURICOCHA</option>
+											<option value="LEONCIO PRADO">LEONCIO PRADO</option>
+											<option value="MARANON">MARANON</option>
+											<option value="PACHITEA">PACHITEA</option>
+											<option value="PUERTO INCA">PUERTO INCA</option>
+											<option value="YAROWILCA">YAROWILCA</option>
+										</select>
+									</div>
+								</div>
+
+
+							</div>
+
+
+							<div class="row mt-2">
+								<div class="col-md-2"></div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="Distrito">Distrito:</label>
+										<select class="form-control" name="Distrito" id="Distrito" required>
+											<option selected disabled value="">--Seleccione--</option>
+											<option value="CASTILLO GRANDE">CASTILLO GRANDE</option>
+											<option value="DANIEL ALOMIAS ROBLES">DANIEL ALOMIAS ROBLES</option>
+											<option value="HERMILIO VALDIZAN">HERMILIO VALDIZAN</option>
+											<option value="JOSE CRESPO Y CASTILLO">JOSE CRESPO Y CASTILLO</option>
+											<option value="LUYANDO">LUYANDO</option>
+											<option value="MARIANO DAMASO BERAUN">MARIANO DAMASO BERAUN</option>
+											<option value="PUCAYACU">PUCAYACU</option>
+											<option value="PUEBLO NUEVO">PUEBLO NUEVO</option>
+											<option value="RUPA-RUPA">RUPA-RUPA</option>
+											<option value="SANTO DOMINGO DE ANDA">SANTO DOMINGO DE ANDA</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="row mt-4">
+								<div class="col-md-2">
+									<label for="Correo">Correo Electrónico:</label>
+								</div>
+								<div class="col-md-4">
+									<input type="email" class="form-control" id="Correo" name="Correo" placeholder=""
+										required maxlength="128" value="">
+								</div>
+
+								<div class="col-md-1"></div>
+
+								<div class="col-md-1">
+									<label for="Telefono">Teléfono:</label>
+								</div>
+								<div class="col-md-3">
+									<input type="text" pattern="[0-9]*" class="form-control" id="Telefono"
+										name="Telefono" placeholder="" required maxlength="15" value="">
+								</div>
+							</div>
+
+
+							<!-- <div class="card mt-4">
+			  <div class="card-header">III. INFORMACI&Oacute;N SOLICITADA</div>
+			  <div class="card-body">
+				   <div class="row">
+					  <div class="col-md-2">
+					  	<label for="detalles"><strong>Informaci&oacute;n a Solicitar:</strong></label>    				  
+					  </div>					
+					  <div class="col-md-7"> 		                        
+                     	<textarea class="form-control" name="detalleSolicitud" th:field="*{detalleSolicitud}" id="detalleSolicitud" maxlength="256" rows="7" required="required"></textarea>
+	                  </div>
+	                  <div class="col-md-2">
+	                  	<label for="caracteres" id="caracteres"></label> 
+	                  </div>                 
+               		</div>			  			  	
+			  </div>
+			</div> -->
+
+							<div class="card mt-4">
+  <div class="card-header">II. DATOS DEL DESTINO</div>
+  <div class="card-body">
+    <div class="row mt-4">
+      <div class="col-md-2">
+        <label for="CodDependencia">Oficina Destino:</label>
+      </div>
+      <div class="col-md-9">
+        <select class="form-control" name="CodDependencia" id="CodDependencia" required>
+          <option selected disabled value="">--Seleccione--</option>
+          <option value="25">DEVIDA - Sede Central</option>
+          <option value="70">Unidad de Recursos Humanos</option>
+          <option value="26">UE006-DEVIDA-VRAEM</option>
+          <option value="27">Oficina de Coordinación Caballococha</option>
+          <option value="64">Oficina de Coordinación Chanchamayo</option>
+          <option value="28">Oficina de Coordinación Codo del Pozuzo</option>
+          <option value="29">Oficina de Coordinación Monzón</option>
+          <option value="30">Oficina de Coordinación Puerto Bermúdez</option>
+          <option value="31">Oficina de Coordinación San Martín</option>
+          <option value="32">Oficina Zonal Iquitos</option>
+          <option value="33">Oficina Zonal La Merced</option>
+          <option value="34">Oficina Zonal Pucallpa</option>
+          <option value="35">Oficina Zonal Quillabamba</option>
+          <option value="36">Oficina Zonal San Francisco</option>
+          <option value="37">Oficina Zonal San Juan del Oro</option>
+          <option value="38">Oficina Zonal Tarapoto</option>
+          <option value="74">Oficina Zonal Jaén</option>
+          <option value="39">Oficina Zonal Tingo María</option>
+          <option value="66">Área de Coordinación Anchihuay</option>
+          <option value="65">Área de Coordinación Mazamari</option>
+          <option value="67">Área de Coordinación San Francisco</option>
+          <option value="71">Oficina de Coordinación Amazonas</option>
+          <option value="72">Oficina de Coordinación Aguaytía</option>
+          <option value="73">Oficina de Coordinación Putumayo</option>
+        </select>
+      </div>
+    </div>
+    <label for="CodDependencia" class="mt-2 d-block text-muted" style="font-size: 0.9rem;">
+      En caso no conozca la Oficina Destino, seleccione "DEVIDA - Sede Central".
+    </label>
+  </div>
+</div>
+
+
+
+							<div class="card mt-4">
+  <div class="card-header">III. DATOS DEL DOCUMENTO</div>
+  <div class="card-body">
+    
+    <div class="row mt-4">
+      <div class="col-md-2">
+        <label for="CodTipoDocumentoDoc">Tipo Documento:</label>
+      </div>
+      <div class="col-md-3">
+        <select class="form-control" name="CodTipoDocumentoDoc" id="CodTipoDocumentoDoc" required>
+          <option selected disabled value="">--Seleccione--</option>
+          <option value="248">Carta</option>
+          <option value="218">Oficio</option>
+          <option value="250">Oficicio Circular</option>
+          <option value="223">Informe</option>
+          <option value="232">Proveído</option>
+          <option value="901">Ficha de Postulación</option>
+          <option value="903">CURRICULO VITAE</option>
+        </select>
+      </div>
+      
+      <div class="col-md-1"></div>
+      
+      <div class="col-md-2">
+        <label for="NroDocumentoDoc">Nro. de Documento (Opcional):</label>
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control" id="NroDocumentoDoc" name="NroDocumentoDoc" maxlength="50" placeholder="">
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-2">
+        <label for="NroFolios">Número de Folios:</label>
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control" id="NroFolios" name="NroFolios" pattern="[1-9][0-9]*" required>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-2">
+        <label for="DetalleSolicitud">Asunto:</label>
+      </div>
+      <div class="col-md-7">
+        <textarea class="form-control" name="DetalleSolicitud" id="DetalleSolicitud" maxlength="256" rows="7" required></textarea>
+      </div>
+      <div class="col-md-2">
+        <label id="caracteres">(256 caracteres disponibles)</label>
+      </div>
+    </div>
+
+    <!-- Captcha (sin cambios) -->
+    <input type="hidden" id="hdnSite" name="hdnSite" value="6LfPCSArAAAAAIk7HM-6934Yt13DCdq4VLAZq-ck">
+    <textarea id="g-recaptcha-response2" name="g-recaptcha-response2" class="g-recaptcha-response"
+      style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea>
+
+  </div>
+</div>
+
+
+									<!--      		        <div class="row mt-3" id="usuario_2">	 -->
+									<!-- 						<div class="col-md-4"></div> -->
+									<!-- 						<div class="col-md-4">  -->
+									<!-- 		                  <div class="form-group"> -->
+									<!-- 		                  	<h6  class="card-title text-center">Verificación no soy un robot</h6> -->
+									<!-- 		                  	<div class="form-group"> -->
+									<!-- 								<div class="col-md-12" id="dvdCaptcha"></div> -->
+									<!-- 							</div> -->
+
+									<!-- 		                  </div> -->
+									<!-- 		                </div> -->
+									<!-- 			            <div class="col-md-4"></div> -->
+									<!-- 		            </div> -->
+
+
+
+
+
+									<button id="submitForm1" type="submit" class="btn btn-warning"
+										data-loading-text="&lt;i class='fa fa-circle-o-notch fa-spin'&gt;&lt;/i&gt; Procesando..."
+										style="display:none;">
+										<i class="fa fa-save"></i>2
+									</button>
+
+
+
+								</div>
+							</div>
+
+				</form>
+
+
+				<div class="card mt-1">
+					<form id="frmCargaDocumentos" name="frmCargaDocumentos"
+						action="https://localhost:7022/api/MesaPartes" method="POST" enctype="multipart/form-data"
+						autocomplete="off"><input type="hidden" name="_csrf"
+							value="1a721db7-182a-42a7-941a-ad444c4b5e0f">
+
+						<div class="row mt-5">
+							<div class="col-md-2">
+								<label for="nombre">Documento Principal:</label>
+							</div>
+							<div class="col-md-5">
+								<input type="file" name="archivo" id="archivo" autocomplete="off" required="required"
+									onchange="filevalidation()" accept=".pdf,application/pdf" value="">
+								<script>
+									// Al cargar la página, forzamos que sólo acepte .pdf
+									document.getElementById('archivo').accept = '.pdf,application/pdf';
+								</script>
+								<label for="avisop">Documento Principal:Tamaño máximo permitido es de 25 MB.<br>Sólo se
+									puede subir un(01) archivo en formato PDF, con firma digital o firma manuscrita
+									escaneada.</label>
+							</div>
+							<div class="col-md-2">
+								<button id="cargarDocumento" type="submit"
+									data-loading-text="&lt;i class='fa fa-circle-o-notch fa-spin'&gt;&lt;/i&gt; Cargando...">
+									<i class="fa fa-upload"></i>
+									Cargar
+								</button>
+							</div>
+						</div>
+
+						<div id="bloqueEstatus1" style="display: none;">
+							<div class="row mt-3">
+								<div class="col-md-2">
+									<label for="nombre"></label>
+								</div>
+								<div class="col-md-5">
+									Cargando Archivo
+								</div>
+								<div class="col-md-2">
+								</div>
+							</div>
+
+							<div class="row mt-1">
+								<div class="col-md-2">
+									<label for="nombre"></label>
+								</div>
+								<div class="col-md-5">
+
+									<div class="progress">
+										<div class="progress-bar progress-bar-striped active" role="progressbar"
+											aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+										</div>
+									</div>
+
+								</div>
+								<div class="col-md-2">
+								</div>
+							</div>
+						</div>
+
+						<div id="avisoDocumento" style="display: none;">
+							<div class="row mt-1">
+								<div class="col-md-2">
+									<label for="nombre"></label>
+								</div>
+								<div class="col-md-7">
+									Se puede cargar solo 1 Documento Principal como máximo.
+								</div>
+								<div class="col-md-2">
+								</div>
+							</div>
+
+						</div>
+
+					</form>
+
+					<div class="row  mt-2">
+						<div class="col-md-2">
+						</div>
+						<div class="col-md-9">
+							<!-- Inicio | Tabla -->
+							<div class="dataTable_wrapper">
+								<div id="tablaDocumento_wrapper"
+									class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+									<div class="row">
+										<div class="col-sm-12">
+											<table id="tablaDocumento"
+												class="table table-striped table-bordered table-hover display responsive nowrap dataTable no-footer dtr-inline"
+												width="100%" role="grid" style="width: 100%;">
+												<thead>
+													<tr role="row">
+														<th width="30%" class="sorting_disabled" rowspan="1" colspan="1"
+															style="width: 88.2px;">Documento</th>
+														<th width="50%" class="sorting_disabled" rowspan="1" colspan="1"
+															style="width: 105.2px;">Descripción</th>
+														<th width="20%" class="sorting_disabled center" rowspan="1"
+															colspan="1" style="width: 20px;"></th>
+													</tr>
+												</thead>
+												<tbody class="loading">
+													<tr class="odd">
+														<td valign="top" colspan="3" class="dataTables_empty">No se
+															encontraron datos</td>
+													</tr>
+												</tbody>
+											</table>
+											<div id="tablaDocumento_processing"
+												class="dataTables_processing panel panel-default"
+												style="display: none;"><i class="fa fa-spinner fa-spin fa-5x fa-fw"
+													aria-hidden="true"></i></div>
+										</div>
+									</div>
+								</div>
+							</div> <!-- Fin | Tabla -->
+						</div>
+						<div class="col-md-2">
+						</div>
+					</div>
+				</div>
+				<div class="card mt-1">
+					<form id="frmCargaDocumentosAnexos" name="frmCargaDocumentosAnexos"
+						action="https://localhost:7022/api/MesaPartes" method="POST" enctype="multipart/form-data"
+						autocomplete="off"><input type="hidden" name="_csrf"
+							value="1a721db7-182a-42a7-941a-ad444c4b5e0f">
+						<div class="row mt-5">
+							<div class="col-md-2">
+								<label for="nombre">Anexos (Opcional):</label>
+							</div>
+							<div class="col-md-5">
+								<input type="file" name="anexo" id="anexo" autocomplete="off"
+									onchange="filevalidation2()" value="" required="required">
+								<label for="avisoa">Anexos:Tamaño máximo permitido 25 MB por documento.<br>Podrán subir
+									hasta tres(03) anexos que podrán tener
+									diferente formatos.</label>
+							</div>
+							<div class="col-md-2">
+								<button id="cargarDocumentoAnexo" type="submit"
+									data-loading-text="&lt;i class='fa fa-circle-o-notch fa-spin'&gt;&lt;/i&gt; Procesando..."><i
+										class="fa fa-upload"></i>
+									Cargar
+								</button>
+							</div>
+						</div>
+
+						<div id="bloqueEstatus2" style="display: none;">
+							<div class="row mt-3">
+								<div class="col-md-2">
+									<label for="nombre"></label>
+								</div>
+								<div class="col-md-5">
+									Cargando Archivo
+								</div>
+								<div class="col-md-2">
+								</div>
+							</div>
+
+							<div class="row mt-1">
+								<div class="col-md-2">
+									<label for="nombre"></label>
+								</div>
+								<div class="col-md-5">
+
+									<div class="progress">
+										<div class="progress-bar progress-bar-striped active" role="progressbar"
+											aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+										</div>
+									</div>
+
+								</div>
+								<div class="col-md-2">
+								</div>
+							</div>
+						</div>
+
+
+						<div id="avisoAnexo" style="display: none;">
+							<div class="row mt-1">
+								<div class="col-md-2">
+									<label for="nombre"></label>
+								</div>
+								<div class="col-md-7">
+									Se pueden cargar solo 3 Anexos como máximo.
+								</div>
+								<div class="col-md-2">
+								</div>
+							</div>
+
+						</div>
+
+
+					</form>
+
+
+					<div class="row  mt-2">
+						<div class="col-md-2">
+						</div>
+						<div class="col-md-9">
+							<!-- Inicio | Tabla -->
+							<div class="dataTable_wrapper">
+								<div id="tablaAnexo_wrapper"
+									class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+									<div class="row">
+										<div class="col-sm-12">
+											<table id="tablaAnexo"
+												class="table table-striped table-bordered table-hover display responsive nowrap dataTable no-footer dtr-inline"
+												width="100%" role="grid" style="width: 100%;">
+												<thead>
+													<tr role="row">
+														<th width="30%" class="sorting_disabled" rowspan="1" colspan="1"
+															style="width: 48.2px;">Anexo</th>
+														<th width="50%" class="sorting_disabled" rowspan="1" colspan="1"
+															style="width: 96.2px;">Descripción</th>
+														<th width="20%" class="sorting_disabled center" rowspan="1"
+															colspan="1" style="width: 25px;"></th>
+													</tr>
+												</thead>
+												<tbody class="loading">
+													<tr class="odd">
+														<td valign="top" colspan="3" class="dataTables_empty">No se
+															encontraron datos</td>
+													</tr>
+												</tbody>
+											</table>
+											<div id="tablaAnexo_processing"
+												class="dataTables_processing panel panel-default"
+												style="display: none;"><i class="fa fa-spinner fa-spin fa-5x fa-fw"
+													aria-hidden="true"></i></div>
+										</div>
+									</div>
+								</div>
+							</div> <!-- Fin | Tabla -->
+						</div>
+						<div class="col-md-2">
+						</div>
+					</div>
+				</div>
+
+				<div class="row mt-5" id="usuario_5">
+					<div class="col-md-1"></div>
+					<div class="col-md-10">
+
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="autoriza1">
+							<label class="text-justify" for="aitoriza1">
+								Autorizo y acepto que los actos administrativos derivados del presente procedimiento
+								sean notificados al correo electrónico consignado
+								en el presente formulario, conforme a lo establecido en el Numeral 20.4 del Artículo 20°
+								del Texto Único Ordenando de la Ley N° 27444,
+								Ley del Procedimiento Administrativo General.
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="autoriza2">
+							<label class="text-justify" for="aitoriza2">
+								En cumplimiento de lo dispuesto por la Ley N° 29733, Ley de Protección de Datos
+								Personales, los datos personales que nos proporcione
+								serán utilizados y/o tratados por DEVIDA (por sí mismo o a través de terceros), estricta
+								y únicamente para el trámite solicitado,
+								pudiendo ser incorporados en un banco de datos personales de titularidad de DEVIDA. Se
+								informa que DEVIDA podría compartir y/o usar
+								y /o almacenar y/o transferir dicha información a terceras personas, estrictamente con
+								el objeto de realizar las actividades antes mencionadas.
+								Usted podrá ejercer sus derechos de información, acceso, rectificación, cancelación y
+								oposición de sus datos personales, en cualquier momento,
+								a través de nuestra Mesa de Partes.
+							</label>
+						</div>
+
+						<div class="col-md-1"></div>
+					</div>
+				</div>
+
+				<div class="row mt-5">
+					&nbsp;
+				</div>
+
+				<div class="row mt-3" id="usuario_2">
+					<div class="col-md-4"></div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<h6 class="card-title text-center">Verificación no soy un robot</h6>
+							<div class="form-group">
+								<div class="col-md-12" id="dvdCaptcha">
+									<div style="width: 304px; height: 78px;">
+										<div><iframe title="reCAPTCHA" width="304" height="78" role="presentation"
+												name="a-fhblub4enkqt" frameborder="0" scrolling="no"
+												sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation"
+												src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPCSArAAAAAIk7HM-6934Yt13DCdq4VLAZq-ck&amp;co=aHR0cHM6Ly9zaXN0ZW1hcy5kZXZpZGEuZ29iLnBlOjQ0Mw..&amp;hl=es&amp;v=_cn5mBoBXIA0_T7xBjxkUqUA&amp;size=normal&amp;cb=f5idtomk6148"></iframe>
+										</div><textarea id="g-recaptcha-response" name="g-recaptcha-response"
+											class="g-recaptcha-response"
+											style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea>
+									</div><iframe style="display: none;"></iframe>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-md-4"></div>
+				</div>
+
+
+
+
+
+
+				<div class="row mt-4" id="usuario_3">
+					<div class="col-md-4"></div>
+					<div class="col-md-1 text-center">
+						<button type="reset" class="btn btn-primary">LIMPIAR</button>
+					</div>
+					<div class="col-md-2">&nbsp;</div>
+					<div class="col-md-1 text-center">
+						<!-- Popup Laura -->
+						<button id="enviar-todo" type="button" class="btn btn-primary class2"
+							onclick="abc();">ENVIAR</button>
+						<!--<button id="enviar-todo" type="button" class="btn btn-primary class2">ENVIAR</button>-->
+					</div>
+					<div class="col-md-4"></div>
+				</div>
+
+				<div class="row mt-5" id="usuario_4">
+					<div class="col-md-1"></div>
+					<div class="col-md-10">
+						Consideraciones Importantes:
+						<ul>
+							<li class="text-justify mt-3">Los documentos enviados deben ser archivos digitalizados,
+								debidamente firmados y convertidos a formato PDF, Word, Excel e IMG.</li>
+							<li class="text-justify mt-3">Es importante que el usuario consigne una cuenta de correo
+								electrónico válida así como un número
+								telefónico (celular o fijo), autorizando a que DEVIDA pueda efectuar cualquier
+								comunicación por este medio.</li>
+						</ul>
+						<!-- <label class="text-left mt-1">Luego de la verificación de los documentos se comunicará a través del correo electrónico el número de expediente
+            		para el seguimiento del trámite por parte del ciudadano.
+            		 </label> -->
+						<div class="col-md-1"></div>
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-md-1"></div>
+					<div class="col-md-10 text-center" style="background-color: #D3D3D3; padding:20px;">
+						<strong>RECUERDA:</strong> Si requiere orientación sobre la presentación de documentos por la
+						Mesa de
+						Partes Virtual, sírvase comunicarse a la Central Telefónica 2074800 anexo 1201-1284-1528.
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+		function filevalidation() {
+			// validación personalizada si deseas
+		}
+		function filevalidation2() {
+			// validación personalizada si deseas
+		}
+		function abc() {
+			alert("Formulario enviado correctamente (simulado).");
+		}
+	</script>
+	<script>
+	document.getElementById('enviar-todo').addEventListener('click', async function () {
+		const formData = new FormData();
+
+		// 1. DATOS DEL SOLICITANTE
+		formData.append('codUsuarioCrea', document.getElementById('codUsuarioCrea').value);
+		formData.append('codTipoSolicitante', document.querySelector('input[name="codTipoSolicitante"]:checked')?.value || '');
+		formData.append('CodTipoDocumento', document.getElementById('CodTipoDocumento').value);
+		formData.append('NroDocumento', document.getElementById('NroDocumento').value);
+		formData.append('RazonSocial', document.getElementById('RazonSocial').value);
+		formData.append('Nombres', document.getElementById('Nombres').value);
+		formData.append('ApePaterno', document.getElementById('ApePaterno').value);
+		formData.append('ApeMaterno', document.getElementById('ApeMaterno').value);
+		formData.append('CalleDomicilio', document.getElementById('CalleDomicilio').value);
+		formData.append('Departamento', document.getElementById('Departamento').value);
+		formData.append('Provincia', document.getElementById('Provincia').value);
+		formData.append('Distrito', document.getElementById('Distrito').value);
+		formData.append('Correo', document.getElementById('Correo').value);
+		formData.append('Telefono', document.getElementById('Telefono').value);
+
+		// 2. DATOS DEL DESTINO
+		formData.append('CodDependencia', document.getElementById('CodDependencia').value);
+
+		// 3. DATOS DEL DOCUMENTO
+		formData.append('CodTipoDocumentoDoc', document.getElementById('CodTipoDocumentoDoc').value);
+		formData.append('NroDocumentoDoc', document.getElementById('NroDocumentoDoc').value);
+		formData.append('NroFolios', document.getElementById('NroFolios').value);
+		formData.append('DetalleSolicitud', document.getElementById('DetalleSolicitud').value);
+
+		// 4. DOCUMENTO PRINCIPAL
+		const archivo = document.getElementById('archivo').files[0];
+		if (archivo) formData.append('archivo', archivo);
+
+		// 5. ANEXOS (hasta 3)
+		const anexo = document.getElementById('anexo').files[0];
+		if (anexo) formData.append('anexo', anexo);
+
+		try {
+			const response = await fetch('https://localhost:7022/api/MesaPartes', {
+				method: 'POST',
+				body: formData
+			});
+			if (response.ok) {
+				alert('Formulario enviado correctamente.');
+			} else {
+				alert('Error al enviar el formulario. Código: ' + response.status);
+			}
+		} catch (error) {
+			console.error('Error:', error);
+			alert('Error al conectar con el servidor.');
+		}
+	});
+</script>
+
+
+
+</body>
+<footer class="text-center text-muted my-3">
+	© 2020 DEVIDA, Inc. | WebApp SIMPV
+</footer>
+
+</html>
